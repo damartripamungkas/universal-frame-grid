@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Universal Frame Grid - Web Viewer</title>
+    <meta
+      name="description"
+      content="Universal Frame Grid offers a seamless way to view and manage web
+        streams from various platforms in a responsive grid. With easy rotation
+        and customizable grid options, enjoy a smooth streaming experience
+        across all devices."
+    />
+    <meta name="keywords" content="ufg, frame grid, web frame grid, web viewer, iframe" />
+    <meta name="author" content="damartripamungkas" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./public/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./public/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./public/favicon/favicon-16x16.png" />
+    <link rel="manifest" href="./public/favicon/site.webmanifest" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-neutral-100 py-4 md:py-6 lg:py-8 px-4">
+    <div class="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl 2xl:max-w-7xl mx-auto">
+      <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold font-mono mb-2">Universal Frame Grid</h1>
+      <p class="leading-relaxed font-sans text-sm md:text-md lg:text-base mb-8 max-w-[1000px]">Universal Frame Grid offers a seamless way to view and manage web streams from various platforms in a responsive grid. With easy rotation and customizable grid options, enjoy a smooth streaming experience across all devices.</p>
+
+      <!-- Input for adding text containing web links -->
+      <div class="mb-6">
+        <textarea id="webText" placeholder="Enter text containing web links" class="w-full p-2 outline outline-1"></textarea>
+        <div class="flex gap-2 mt-2">
+          <!-- Add Web Button -->
+          <button onclick="extractAndAddWebs()" class="bg-gray-500 text-white px-4 py-1 sm:w-full md:w-auto text-sm rounded">Add</button>
+          <!-- Reset Button -->
+          <button onclick="resetGrid()" class="bg-gray-500 text-white px-4 py-1 sm:w-full md:w-auto text-sm rounded">Reset</button>
+          <!-- Dropdown Button -->
+          <div class="relative inline-block text-left">
+            <button onclick="toggleDropdown()" id="dropdownButton" class="bg-gray-500 text-white px-4 py-1 sm:w-full md:w-auto text-sm md:text-base rounded">2x2</button>
+            <!-- Dropdown Menu -->
+            <div id="dropdownMenu" class="hidden absolute z-10 mt-2 w-32 py-2 bg-white shadow">
+              <button onclick="changeGridColumns(1); toggleDropdown();" class="block w-full text-left px-4 py-2 hover:bg-gray-100">1x1</button>
+              <button onclick="changeGridColumns(2); toggleDropdown();" class="block w-full text-left px-4 py-2 hover:bg-gray-100">2x2</button>
+              <button onclick="changeGridColumns(3); toggleDropdown();" class="block w-full text-left px-4 py-2 hover:bg-gray-100">3x3</button>
+              <button onclick="changeGridColumns(4); toggleDropdown();" class="block w-full text-left px-4 py-2 hover:bg-gray-100">4x4</button>
+              <button onclick="changeGridColumns(5); toggleDropdown();" class="block w-full text-left px-4 py-2 hover:bg-gray-100">5x5</button>
+            </div>
+          </div>
+          <a href="https://github.com/damartripamungkas/universal-frame-grid" class="bg-gray-500 text-white px-2 ml-6 py-1 sm:w-full md:w-auto text-sm rounded flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+              <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+            </svg>
+          </a>
+          <a href="https://github.com/damartripamungkas/universal-frame-grid" class="bg-gray-500 text-white px-2 py-1 sm:w-full md:w-auto text-sm rounded flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                fill-rule="evenodd"
+                d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.03-2.682-.103-.253-.447-1.27.098-2.646 0 0 .84-.269 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.747-1.026 2.747-1.026.547 1.376.203 2.394.1 2.646.64.698 1.026 1.591 1.026 2.682 0 3.842-2.337 4.687-4.565 4.935.359.309.678.919.678 1.852 0 1.338-.012 2.419-.012 2.747 0 .267.18.577.688.48C19.137 20.166 22 16.418 22 12c0-5.523-4.477-10-10-10z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Grid to display webs -->
+      <div id="webGrid" class="grid grid-cols-2 gap-4">
+        <!-- Webs will be displayed here -->
+      </div>
+    </div>
+
+    <script>
+      let countWeb = 0
+      let dropdownOpen = false
+      function toggleDropdown() {
+        const dropdownMenu = document.getElementById("dropdownMenu")
+        if (dropdownOpen) {
+          dropdownMenu.classList.add("hidden")
+        } else {
+          dropdownMenu.classList.remove("hidden")
+        }
+        dropdownOpen = !dropdownOpen
+      }
+
+      function changeGridColumns(cols) {
+        const grid = document.getElementById("webGrid")
+        const dropdownBtn = document.getElementById("dropdownButton")
+        // Remove existing column classes
+        grid.classList.forEach((cls) => {
+          if (cls.startsWith("grid-cols-")) {
+            grid.classList.remove(cls)
+          }
+        })
+        // Add the new column class
+        grid.classList.add(`grid-cols-${cols}`)
+        dropdownBtn.textContent = `${cols}x${cols}`
+      }
+
+      function extractAndAddWebs(link) {
+        const webText = link || document.getElementById("webText").value
+        if (!webText) {
+          return alert("Please enter text containing web links.")
+        }
+
+        // Universal regex to detect links
+        const regex = /https?:\/\/[^\s]+/g
+        const matches = webText.match(regex)
+        if (!matches) {
+          return alert("No valid links found in text.")
+        }
+
+        const webGrid = document.getElementById("webGrid")
+        ;[...new Set(matches)].forEach(async (link) => {
+          link = link.replaceAll(`\n`, ``).replaceAll(`\r`, ``)
+          countWeb += 1
+          const webElement = document.createElement("div")
+          webElement.id = `web-${countWeb}`
+          webElement.className = `bg-gray-200 shadow overflow-hidden mb-4 outline outline-1 rounded`
+          webElement.innerHTML = `
+                <div>
+                    <iframe src="${link}" class="w-full h-96 lg:h-[30rem]" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="flex gap-2 items-center pl-2 pb-2">
+                    <button onclick="removeCard('web-${countWeb}', '${link}')" class="w-full bg-red-500 text-white text-sm px-2 py-1 mt-2 max-w-[80px] rounded">Remove</button>
+                    <button onclick="navigator.clipboard.writeText('${link}')" class="w-full bg-gray-500 text-white text-sm px-2 mt-2 py-1 max-w-[60px] rounded">Copy</button>
+                    <button onclick="navigator.clipboard.writeText('${link}')" class="w-full bg-gray-500 text-white text-sm px-2 mt-2 py-1 max-w-[60px] rounded">Visit</button>
+                </div>
+              `
+
+          webGrid.appendChild(webElement)
+        })
+        document.getElementById("webText").value = ""
+      }
+
+      function removeCard(id, link) {
+        document.getElementById(id).remove()
+      }
+
+      function resetGrid() {
+        const webGrid = document.getElementById("webGrid")
+        webGrid.innerHTML = ""
+      }
+
+      // New function to set grid based on screen size
+      function setGridBasedOnScreenSize() {
+        if (window.innerWidth < 768) {
+          changeGridColumns(1)
+        } else {
+          changeGridColumns(2)
+        }
+      }
+
+      // Event listener for window resize
+      window.addEventListener("resize", setGridBasedOnScreenSize)
+
+      // Initialize grid layout on page load
+      setGridBasedOnScreenSize()
+    </script>
+  </body>
+</html>
